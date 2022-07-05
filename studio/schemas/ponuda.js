@@ -23,5 +23,10 @@ export default {
         },
       ],
     },
+    {
+      name: 'red',
+      title: 'Red',
+      type: 'number',
+    },
   ],
 };

@@ -18,5 +18,10 @@ export default {
       title: 'Cena',
       type: 'string',
     },
+    {
+      name: 'red',
+      title: 'Red',
+      type: 'number',
+    },
   ],
 };
