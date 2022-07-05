@@ -1,17 +1,46 @@
-import { HeroSection } from './HeroStyles';
-import heroImage from '../../assets/hero.jpg';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-scroll';
+import sanityClient from '../../client';
+
+import { HeroSection } from './HeroStyles';
 
 export default function Hero() {
+  const [heroData, setHeroData] = useState(null);
+
+  useEffect(() => {
+    sanityClient
+      .fetch(
+        `
+      *[_type == "hero"][0]{
+        heading,
+        subheading,
+        image{
+          altText,
+          "src": asset->url
+        }
+      }
+    `
+      )
+      .then((data) => {
+        setHeroData(data);
+      })
+      .catch(console.error);
+  }, []);
+
   return (
     <HeroSection id='home'>
       <div className='heroImageWrapper'>
-        <img src={heroImage} alt='hero img' />
+        {heroData && (
+          <img
+            src={`${heroData.image.src}?blur=50`}
+            alt={heroData.image.altText}
+          />
+        )}
       </div>
       <div className='heroDetails'>
         <div className='heroText'>
-          <h1>Puslica</h1>
-          <h4>Torte • Kolači • Slana Peciva</h4>
+          <h1>{heroData && heroData.heading}</h1>
+          <h4>{heroData && heroData.subheading}</h4>
         </div>
         <div className='heroCtaButtons'>
           <Link

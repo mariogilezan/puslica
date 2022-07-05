@@ -1,6 +1,29 @@
+import { useEffect, useState } from 'react';
+import sanityClient from '../../client';
+
 import { CenovnikSection, Table } from './CenovnikStyles';
 
 export default function Cenovnik() {
+  const [cenovnikData, setCenovnikData] = useState(null);
+
+  useEffect(() => {
+    sanityClient
+      .fetch(
+        `
+      *[_type == "proizvodi"] | order(red){
+        _id,
+        nazivProizvoda,
+        mernaJedinica,
+        cena
+      }
+    `
+      )
+      .then((data) => {
+        setCenovnikData(data);
+      })
+      .catch(console.error);
+  }, []);
+
   return (
     <CenovnikSection id='cenovnik'>
       <h2>Cenovnik</h2>
@@ -78,6 +101,14 @@ export default function Cenovnik() {
             <td>Kg</td>
             <td>500.00 Din</td>
           </tr>
+          {cenovnikData &&
+            cenovnikData.map((proizvod) => (
+              <tr key={proizvod._id}>
+                <td>{proizvod.nazivProizvoda}</td>
+                <td>{proizvod.mernaJedinica}</td>
+                <td>{proizvod.cena}</td>
+              </tr>
+            ))}
         </tbody>
       </Table>
     </CenovnikSection>

@@ -12,7 +12,6 @@ import BusinessIcon from '@mui/icons-material/Business';
 export default function Footer() {
   const currentYear = new Date().getFullYear();
   const [footerData, setFooterData] = useState(null);
-  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     sanityClient
@@ -25,7 +24,6 @@ export default function Footer() {
       `
       )
       .then((data) => {
-        setLoading(false);
         setFooterData(data);
       })
       .catch(console.error);
@@ -38,11 +36,11 @@ export default function Footer() {
           <span>Puslica</span> MB
         </h2>
         <p>
-          <BusinessIcon /> {!loading && footerData.adresa}
+          <BusinessIcon /> {footerData && footerData.adresa}
         </p>
         <p>
           <PhoneIcon />
-          {!loading && <a href='tel:0693322010'>{footerData.brojTelefona}</a>}
+          {footerData && <a href='tel:0693322010'>{footerData.brojTelefona}</a>}
         </p>
       </div>
       <div className='socialsWrapper'>

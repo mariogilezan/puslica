@@ -1,26 +1,42 @@
-import React from 'react';
+import { useEffect, useState } from 'react';
+import sanityClient from '../../client';
+
 import { PonudaSection } from './PonudaStyles';
-import torteImg from '../../assets/torte.jpg';
-import kolaciImg from '../../assets/kolaci.jpg';
-import pecivaImg from '../../assets/peciva.jpg';
 
 export default function Ponuda() {
+  const [ponudaData, setPonudaData] = useState(null);
+
+  useEffect(() => {
+    sanityClient
+      .fetch(
+        `
+      *[_type == "ponuda"] | order(red){
+        _id,
+        title,
+        image{
+          altText,
+          "src": asset->url
+        }
+      }
+    `
+      )
+      .then((data) => {
+        setPonudaData(data);
+      })
+      .catch(console.error);
+  }, []);
+
   return (
     <PonudaSection id='ponuda'>
       <h2>Ponuda</h2>
       <div className='cardsWrapper'>
-        <div className='card'>
-          <img src={torteImg} alt='torte' />
-          <h5>Torte</h5>
-        </div>
-        <div className='card'>
-          <img src={kolaciImg} alt='kolaci' />
-          <h5>Kolači</h5>
-        </div>
-        <div className='card'>
-          <img src={pecivaImg} alt='peciva' />
-          <h5>Slana Peciva</h5>
-        </div>
+        {ponudaData &&
+          ponudaData.map((ponuda) => (
+            <div className='card' key={ponuda._id}>
+              <img src={ponuda.image.src} alt={ponuda.image.altText} />
+              <h5>{ponuda.title}</h5>
+            </div>
+          ))}
       </div>
     </PonudaSection>
   );
