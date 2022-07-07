@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://breaking-bad-show-info.netlify.app/">
+  <a href="https://puslica.netlify.app/">
     <img alt="site logo" src="./src/assets/logo.svg" width="120" style="background-color: #FFFFFF; border-radius: 10px; padding: 10px" />
   </a>
 </p>
