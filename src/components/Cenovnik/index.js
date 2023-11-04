@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import sanityClient from '../../client';
+import { client } from '../../client';
 
 import { CenovnikSection, Table } from './CenovnikStyles';
 
@@ -7,7 +7,7 @@ export default function Cenovnik() {
   const [cenovnikData, setCenovnikData] = useState(null);
 
   useEffect(() => {
-    sanityClient
+    client
       .fetch(
         `
       *[_type == "proizvodi"] | order(red){

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-scroll';
-import sanityClient from '../../client';
+import { client } from '../../client';
 
 import { HeroSection } from './HeroStyles';
 
@@ -8,7 +8,7 @@ export default function Hero() {
   const [heroData, setHeroData] = useState(null);
 
   useEffect(() => {
-    sanityClient
+    client
       .fetch(
         `
       *[_type == "hero"][0]{

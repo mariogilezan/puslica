@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import sanityClient from '../../client';
+import { client } from '../../client';
 
 import { FooterSection } from './FooterStyles';
 
@@ -14,7 +14,7 @@ export default function Footer() {
   const [footerData, setFooterData] = useState(null);
 
   useEffect(() => {
-    sanityClient
+    client
       .fetch(
         `
         *[_type == "footer"][0]{

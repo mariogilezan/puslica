@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import sanityClient from '../../client';
+import { client } from '../../client';
 
 import { PonudaSection } from './PonudaStyles';
 
@@ -7,7 +7,7 @@ export default function Ponuda() {
   const [ponudaData, setPonudaData] = useState(null);
 
   useEffect(() => {
-    sanityClient
+    client
       .fetch(
         `
       *[_type == "ponuda"] | order(red){

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import sanityClient from '../../client';
+import { client } from '../../client';
 
 import { GallerySection } from './GalleryStyles';
 
@@ -7,7 +7,7 @@ export default function Gallery() {
   const [galleryData, setGalleryData] = useState(null);
 
   useEffect(() => {
-    sanityClient
+    client
       .fetch(
         `
       *[_type == "galerija"][0]{
