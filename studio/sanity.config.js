@@ -2,18 +2,15 @@ import { defineConfig } from 'sanity';
 import { deskTool } from 'sanity/desk';
 import { visionTool } from '@sanity/vision';
 import schemas from './schemas/schema';
-import deskStructure from './src/deskStructure';
+
+const projectId = import.meta.env.SANITY_STUDIO_PROJECT_ID;
+const dataset = import.meta.env.SANITY_STUDIO_DATASET;
 
 export default defineConfig({
   title: 'puslica-studio',
-  projectId: '7cqcyj9t',
-  dataset: 'production',
-  plugins: [
-    deskTool({
-      structure: deskStructure,
-    }),
-    visionTool(),
-  ],
+  projectId,
+  dataset,
+  plugins: [deskTool(), visionTool()],
   tools: (prev, context) => {
     const isAdmin = context.currentUser.roles.find(
       ({ name }) => name === 'administrator'
