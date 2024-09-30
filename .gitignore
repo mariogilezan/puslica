@@ -12,6 +12,7 @@ node_modules
 /build
 dist
 /.sanity
+/public
 
 # misc
 .DS_Store
